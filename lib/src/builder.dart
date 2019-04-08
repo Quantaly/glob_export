@@ -22,14 +22,15 @@ class GlobExportBuilder extends Builder {
     //var allAssets = await buildStep.findAssets(Glob("**")).toSet();
     var exportIds = Set<AssetId>();
     for (var line in fileContents.split(_newline)) {
-      String glob = _path.joinAll(List.from(buildStep.inputId.pathSegments)..removeLast()..add(line));
+      String glob = _path.joinAll(List.from(buildStep.inputId.pathSegments)
+        ..removeLast()
+        ..add(line));
       print("the glob is $glob");
-      exportIds.addAll(await buildStep
-          .findAssets(Glob(glob))
-          .toSet());
+      exportIds.addAll(await buildStep.findAssets(Glob(glob)).toSet());
     }
 
-    var exports = exportIds.map((id) => Directive.export(_exportUri(id.uri, buildStep.inputId.uri)));
+    var exports = exportIds.map(
+        (id) => Directive.export(_exportUri(id.uri, buildStep.inputId.uri)));
     var library = Library((b) => b..directives.addAll(exports));
 
     var outputId = buildStep.inputId.changeExtension(".g.dart");
@@ -43,7 +44,8 @@ class GlobExportBuilder extends Builder {
 
 String _exportUri(Uri uri, Uri baseUri) {
   if (uri.isScheme("package")) return uri.toString();
-  var ret = _path.relative(uri.toString(), from: _path.dirname(baseUri.toString()));
+  var ret =
+      _path.relative(uri.toString(), from: _path.dirname(baseUri.toString()));
   print(ret);
   return ret;
 }
