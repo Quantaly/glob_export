@@ -1,0 +1,9 @@
+builders:
+  glob_export_builder:
+    import: "package:glob_export/builder.dart"
+    builder_factories: ["makeBuilder"]
+    build_extensions: {".glex": [".g.dart"]}
+    auto_apply: root_package
+    build_to: source
+    defaults:
+      generate_for: ["**"]
