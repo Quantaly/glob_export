@@ -2,8 +2,21 @@ builders:
   glob_export_builder:
     import: "package:glob_export/builder.dart"
     builder_factories: ["makeBuilder"]
-    build_extensions: {".glex": [".g.dart"]}
-    auto_apply: root_package
+    build_extensions: {".glex": [".glob_export_output"]}
+    auto_apply: all_packages
+    build_to: cache
+    applies_builders: ["|glob_export_move_builder"]
+
+  glob_export_move_builder:
+    import: "package:glob_export/builder.dart"
+    builder_factories: ["makeMoveBuilder"]
+    build_extensions: {".glob_export_output": [".g.dart"]}
+    auto_apply: none
     build_to: source
-    defaults:
-      generate_for: ["**"]
+    applies_builders: ["|glob_export_file_deleting_builder"]
+
+post_process_builders:
+  glob_export_file_deleting_builder:
+    import: "package:glob_export/builder.dart"
+    builder_factory: "makeFileDeletingBuilder"
+    input_extensions: [".glob_export_output"]
