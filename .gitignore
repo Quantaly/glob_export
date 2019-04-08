@@ -11,4 +11,3 @@ build/
 doc/api/
 
 *.g.dart
-!example**/*.g.dart
