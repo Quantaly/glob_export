@@ -23,7 +23,7 @@ class GlobExportBuilder extends Builder {
     var excludes = <AssetId>{};
 
     for (var line in fileContents.split(_newline)) {
-      if (line.startsWith("#")) {
+      if (line.startsWith("#") || line.isEmpty) {
         continue;
       } else if (line.startsWith("!")) {
         String glob = _path.joinAll(List.from(buildStep.inputId.pathSegments)
