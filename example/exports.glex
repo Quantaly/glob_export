@@ -1,2 +1,9 @@
 ?_file.dart
 **/*.dart
+!morefiles/d_file.dart
+
+# should export:
+# a_file.dart
+# b_file.dart
+# morefiles/e_fiel.dart
+# morefiles/f_file.dart
