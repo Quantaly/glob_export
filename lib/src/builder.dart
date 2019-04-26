@@ -38,9 +38,22 @@ class GlobExportBuilder extends Builder {
       }
     }
 
-    var exports = includes.difference(excludes).map(
-        (id) => Directive.export(_exportUri(id.uri, buildStep.inputId.uri)));
-    var library = Library((b) => b..directives.addAll(exports));
+    var potentialExports = includes.difference(excludes);
+    var exports = <AssetId>{};
+
+    // buildStep.resolver.isLibrary is totally borked
+    // it never actually returns true
+    await Future.wait(potentialExports.map((asset) async {
+      if (await buildStep.resolver.isLibrary(asset)) {
+        exports.add(asset);
+      } else {
+        print("$asset is not a library");
+      }
+    }));
+
+    var library = Library((b) => b
+      ..directives.addAll(exports.map((id) =>
+          Directive.export(_exportUri(id.uri, buildStep.inputId.uri)))));
 
     var outputId = buildStep.inputId.changeExtension(".glob_export_output");
     var emitter = DartEmitter(Allocator.none, true);
