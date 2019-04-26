@@ -1,5 +1,5 @@
 name: glob_export
-description: A starting point for Dart libraries or applications.
+description: A builder package for automatically exporting Dart files in a project based on globs.
 version: 0.1.0
 homepage: https://www.github.com/quantumAssembly/glob_export
 author: Kai Page <kaibug@gmail.com>
