@@ -14,7 +14,9 @@ builders:
     auto_apply: none
     build_to: source
     required_inputs: [".glob_export_output"]
-    runs_before: ["angular|angular"]
+    runs_before:
+      - "angular|angular"
+      - "json_serializable|json_serializable"
     applies_builders: ["|glob_export_file_deleting_builder"]
 
 post_process_builders:

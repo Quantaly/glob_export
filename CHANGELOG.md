@@ -1,3 +1,9 @@
+## 0.1.3
+
+- Improved compatibility with `json_serializable`
+  - This is getting kind of stupid
+- Removed a print statement intended for debugging
+
 ## 0.1.2
 
 - Improved compatibility with `angular`
