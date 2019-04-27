@@ -12,7 +12,11 @@ class MoveBuilder extends Builder {
   };
 
   @override
-  Future<void> build(BuildStep buildStep) async => buildStep.writeAsBytes(
-      buildStep.inputId.changeExtension(".g.dart"),
-      buildStep.readAsBytes(buildStep.inputId));
+  Future<void> build(BuildStep buildStep) async {
+    print("whoof wants to know");
+    return buildStep.writeAsBytes(
+        buildStep.inputId.changeExtension(".g.dart"),
+        buildStep.readAsBytes(
+            buildStep.inputId.changeExtension(".glob_export_output")));
+  }
 }

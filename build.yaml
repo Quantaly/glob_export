@@ -3,16 +3,18 @@ builders:
     import: "package:glob_export/builder.dart"
     builder_factories: ["makeBuilder"]
     build_extensions: {".glex": [".glob_export_output"]}
-    auto_apply: all_packages
+    auto_apply: dependents
     build_to: cache
     applies_builders: ["|glob_export_move_builder"]
 
   glob_export_move_builder:
     import: "package:glob_export/builder.dart"
     builder_factories: ["makeMoveBuilder"]
-    build_extensions: {".glob_export_output": [".g.dart"]}
+    build_extensions: {".glex": [".g.dart"]}
     auto_apply: none
     build_to: source
+    required_inputs: [".glob_export_output"]
+    runs_before: ["angular|angular"]
     applies_builders: ["|glob_export_file_deleting_builder"]
 
 post_process_builders:
@@ -20,3 +22,10 @@ post_process_builders:
     import: "package:glob_export/builder.dart"
     builder_factory: "makeFileDeletingBuilder"
     input_extensions: [".glob_export_output"]
+
+targets:
+  $default:
+    builders:
+      glob_export|glob_export_builder:
+        generate_for:
+          - "**"
